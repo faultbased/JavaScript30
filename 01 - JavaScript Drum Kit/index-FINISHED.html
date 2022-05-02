@@ -58,24 +58,48 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('playing');
-  }
 
-  function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (!audio) return;
+function removeTransition(e) {
+  if (e.propertyName !== 'transform') return;
+  e.target.classList.remove('playing');
+}
 
-    key.classList.add('playing');
-    audio.currentTime = 0;
-    audio.play();
-  }
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if (!audio) return;
 
-  const keys = Array.from(document.querySelectorAll('.key'));
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-  window.addEventListener('keydown', playSound);
+  key.classList.add('playing');
+  audio.currentTime = 0;
+  audio.play();
+}
+
+const keys = Array.from(document.querySelectorAll('.key'));
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+
+/*window.addEventListener('keydown', function (e) {
+  //using attribute selector to grab data-key and use
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  //calls the class="key" 
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if(!audio) return; //stops the function in its tracks
+  //rewind .wav file to the beginning
+  audio.currentTime = 0;
+  audio.play();
+  console.log(key);
+  key.classList.add('playing');
+});
+
+function removeTransition (e) {
+  if (e.propertyName !== 'transform') return;
+  this.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+*/
+
 </script>
 
 
